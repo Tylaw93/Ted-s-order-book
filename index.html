@@ -1,42 +1,147 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-witdth, initial-scale=1.0">
-    <title> Ted Drewes Order Book</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Libre+Barcode+128&family=Roboto&display=swap" rel="stylesheet">
+    <title>Restaurant POS</title>
+   <?!= include("styles-css"); ?>
+    
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Orders</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        
-      </ul>
-    </div>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </nav>
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text"> Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-      </div>
+    <header>
+        <h1>Ted's Order Book</h1>
+    </header>
+    <main class="main-container flex-row">
+        <section class="order flex-column">
+            <article class="receipt flex-column">
+                <div class="company-info flex-column">
+                    <p id="company-name">Ted Drews</p>
+                    <p id="company-address">7376 Chippewa</p>
+                    <p id="company-city">Missouri, St. Louis</p>
+                    <p id="company-phone">314-752-7376</p>
+                    <p id="invoice-number"></p>
+                </div>
+                <div class="receipt-details">
+                    <table class="details-table">
+                        <thead>
+                            <tr>
+                                <td class="dotted-border" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty-border" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <th class="description">Description</th>
+                                <th class="quantity">Qty</th>
+                                <th class="price">Price</th>
+                                <th class="subtotal">Sub</th>
+                                <th class="delete">Del</th>
+                            </tr>
+                            <tr>
+                                <td class="dotted-border" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty-border" colspan="5"></td>
+                            </tr>
+                        </thead>
+                        <tbody id="receipt-details">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="receipt-summary">
+                    <table class="summary-table">
+                        <tbody class="summary-table" id="total-summary">
+                            <tr>
+                                <td class="dotted-border" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty-border" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>Subtotal:</td>
+                                <td id="subtotal-summary">$0.00</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Tax:</td>
+                                <td id="tax-summary">$0.00</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Grand Total:</td>
+                                <td id="grandtotal-summary">$0.00</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <tbody class="summary-table" id="payment-summary">  
+                            <tr>
+                                <td>Amt Paid:</td>
+                                <td id="amount-paid">$0.00</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td id="tip-change-title">Change:</td>
+                                <td id="tip-change-value">$0.00</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Payment Type:</td>
+                                <td id="payment-type"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="dotted-border" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty-border" colspan="3"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="receipt-footer flex-column">
+                    <p id="receipt-message">Thanks For Your Business!</p>
+                    <p id="barcode">Barcode</p>
+                </div>
+            </article>
+            <div class="toolbar flex-row">
+                <i class="fas fa-money-bill-wave toolbar-icon paypad-show" data-payment-type='{"type" : "cash"}'></i>
+                <i class="fas fa-credit-card toolbar-icon paypad-show" data-payment-type='{"type" : "credit"}'></i>
+                <i class="fas fa-trash-alt toolbar-icon" id="clear-order"></i>
+            </div>
+        </section>
+        <section class="menu-payment grid">
+            <div class="menu flex-row" id="menu">
+
+            </div>
+            <div class="payment grid" id="payment-overlay">
+                <div class="paypad grid" id="paypad">
+                    <button class="paypad-btn number" data-id="7">7</button>
+                    <button class="paypad-btn number" data-id="8">8</button>
+                    <button class="paypad-btn number" data-id="9">9</button>
+                    <button class="paypad-btn number" data-id="4">4</button>
+                    <button class="paypad-btn number" data-id="5">5</button>
+                    <button class="paypad-btn number" data-id="6">6</button>
+                    <button class="paypad-btn number" data-id="1">1</button>
+                    <button class="paypad-btn number" data-id="2">2</button>
+                    <button class="paypad-btn number" data-id="3">3</button>
+                    <button class="paypad-btn number" data-id="0">0</button>
+                    <button class="paypad-btn " data-id="back">Back</button>
+                    <button class="paypad-btn " data-id="clear">Clear</button>
+                    <button class="paypad-btn span3-col" id="close-sale" data-id="close-sale">Close Sale</button>
+                </div>
+                <div class="close-paypad flex">
+                    <i class="fas fa-times close-icon paypad-close" id="paypad-close"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+    <?!= include('script-js') ?>
 </body>
+
 </html>
