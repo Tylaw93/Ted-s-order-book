@@ -76,8 +76,14 @@ class Order {
 
     addOrderLine(quantity, sku) {
         let currentLine = {};
-
-        for (let i = 0; i < this._menu.length; i++) {
+        let orderItems = 0;
+        this._order.forEach(instance =>{
+          if(instance.sku === sku){
+          orderItems+=1
+        }
+        })
+        if(orderItems<1){
+          for (let i = 0; i < this._menu.length; i++) {
             if (sku === this._menu[i].sku) {
                 currentLine.sku = this._menu[i].sku;
                 currentLine.description = this._menu[i].description;
@@ -87,27 +93,21 @@ class Order {
                 currentLine.tax = Utilities.roundToTwo(this._menu[i].taxRate * currentLine.subtotal);
             }
         }
-
+        
+        
         this._order.push(currentLine);
+        
         Ui.receiptDetails(this);
 
+        } 
     }
 
-    updateOrderLine(value, index) {
-      // console.log(document.getElementById("quantities 0").value)
-      // console.log(value.id)
-      
+    updateOrderLine(value, index) {      
       this._order[index].quantity = Number(document.getElementById("quantities "+ index).value)
       this._order[index].subtotal = Utilities.roundToTwo(this._order[index].price * this._order[index].quantity)
-      let test = 0
-      document.querySelectorAll('td.subtotal').forEach(q => { 
-        
-        q.textContent = Utilities.convertFloatToString(this._order[test].subtotal = this._order[test].price * this._order[test].quantity)
-        test+=1
-        
-      })
       
-      // console.log(this)
+
+      Ui.receiptDetails(this);
     }
 
     deleteOrderLine(index) {
@@ -283,7 +283,7 @@ class Ui {
         this.summary(orderInstance);
 
         document.querySelectorAll("input").forEach(field => {
-          field.addEventListener('input', () => {
+          field.addEventListener('focusout', () => {
             orderInstance.updateOrderLine(field, parseInt(field.getAttribute("data-num")))
           })
         })
