@@ -2,8 +2,34 @@
 <html>
   <head>
     <base target="_top">
+    
   </head>
   <body>
+    <form>
+      <label for="name"> Company Name</label><br>
+      <input type='text' id="name" name="name" required ><br>
+
+      <label for="phone"> Contact number </label><br>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br> 
+
+      <label for="date"> Pickup Date / Time</label><br>
+      <input type="datetime-local" id="date" name="date" required><br>
+
+      <label>Container</label><br>
+
+      <input type="radio" id='box' name="container" required >
+      <label for="box"> Box</label><br>
+
+      <input type="radio" id="cooler" name="container">
+      <label for="cooler">Cooler</label><br>
+
+      <input type="radio" id="bringing-cooler" name="container">
+      <label for="bringing-cooler"> Bringing Cooler</label><br> 
+
+      <input type='radio' id="no-tax" name="tax">
+      <label for="no-tax">No Tax</label>
+      
+    </form>
     
   </body>
 </html>

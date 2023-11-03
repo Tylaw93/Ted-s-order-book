@@ -108,7 +108,8 @@ class Order {
         } 
     }
 
-    updateOrderLine(value, index) {      
+    updateOrderLine(value, index) { 
+           
       this._order[index].quantity = Number(document.getElementById("quantities "+ index).value)
       this._order[index].subtotal = Utilities.roundToTwo(this._order[index].price * this._order[index].quantity)
       
@@ -229,15 +230,17 @@ class Order {
           order : orderData,
           payment : paymentData
         }
+        
 
-        Ui.hidePaypad(this);
-        this.clearPayment();
+        // Ui.hidePaypad(this);
+        // this.clearPayment();
         this.clearOrder();
         Ui.invoiceNumber(this);
 
         google.script.run.setData(JSON.stringify(exportData));
     }
 }
+
 
 class Ui {
     static menu(orderInstance) {
@@ -424,7 +427,9 @@ function sheetData() {
 
 sheetData();
 
-
+document.getElementById('save').addEventListener('click', () => {
+  order.closeSale();
+})
 
 // STATIC EVENT LISTENERS
 document.getElementById('clear-order').addEventListener('click', () => {
