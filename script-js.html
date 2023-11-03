@@ -1,3 +1,9 @@
+<!-- create orders customer info and save order
+ability to look up and edit orders based on name date or ticket number
+order book view with counts
+add statuses for orders made, ready, paid, out (eventually fresh or bus and name on each item)
+emailing ticket or print ticket
+ -->
 <script> 
 // Export order and the payment to google sheet
 
@@ -256,6 +262,9 @@ class Ui {
                 orderInstance.addOrderLine(1, parseInt(button.getAttribute("data-sku")));
             });
         })
+    }
+    static orderInfo(orderInstance){
+      
     }
 
     static receiptDetails(orderInstance) {
